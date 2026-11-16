@@ -1,0 +1,2036 @@
+{
+  "version": 1,
+  "dirigido": false,
+  "sistema_coordenadas": "WGS84",
+  "orden_coordenadas": [
+    "longitud",
+    "latitud"
+  ],
+  "nodos": [
+    {
+      "id": "p1",
+      "coordenadas": [
+        -76.96121780883358,
+        -12.105333836277046
+      ]
+    },
+    {
+      "id": "p2",
+      "coordenadas": [
+        -76.96117027782753,
+        -12.10506380183919
+      ]
+    },
+    {
+      "id": "p3",
+      "coordenadas": [
+        -76.9613704913629,
+        -12.105150383118918
+      ]
+    },
+    {
+      "id": "p4",
+      "coordenadas": [
+        -76.96156231388828,
+        -12.105049572618551
+      ]
+    },
+    {
+      "id": "p5",
+      "coordenadas": [
+        -76.9615118458848,
+        -12.104943772439151
+      ]
+    },
+    {
+      "id": "p6",
+      "coordenadas": [
+        -76.96129460986057,
+        -12.104504905786715
+      ]
+    },
+    {
+      "id": "p7",
+      "coordenadas": [
+        -76.96126911543526,
+        -12.104448801919434
+      ]
+    },
+    {
+      "id": "p8",
+      "coordenadas": [
+        -76.96122560238774,
+        -12.104334983024659
+      ]
+    },
+    {
+      "id": "p9",
+      "coordenadas": [
+        -76.96124198808876,
+        -12.104297917826436
+      ]
+    },
+    {
+      "id": "p10",
+      "coordenadas": [
+        -76.9608692934988,
+        -12.104455623856634
+      ]
+    },
+    {
+      "id": "p11",
+      "coordenadas": [
+        -76.96062789113357,
+        -12.104641132266964
+      ]
+    },
+    {
+      "id": "p12",
+      "coordenadas": [
+        -76.96078286476646,
+        -12.104782492995698
+      ]
+    },
+    {
+      "id": "p13",
+      "coordenadas": [
+        -76.96082731732291,
+        -12.104741098823519
+      ]
+    },
+    {
+      "id": "p14",
+      "coordenadas": [
+        -76.96085378408523,
+        -12.104855135910617
+      ]
+    },
+    {
+      "id": "p15",
+      "coordenadas": [
+        -76.96087502308006,
+        -12.105000237827994
+      ]
+    },
+    {
+      "id": "p16",
+      "coordenadas": [
+        -76.96080291153531,
+        -12.105008394420347
+      ]
+    },
+    {
+      "id": "p17",
+      "coordenadas": [
+        -76.96074956663792,
+        -12.105016628564831
+      ]
+    },
+    {
+      "id": "p18",
+      "coordenadas": [
+        -76.96067665333618,
+        -12.105024210227803
+      ]
+    },
+    {
+      "id": "p20",
+      "coordenadas": [
+        -76.96110883540804,
+        -12.105243810768211
+      ]
+    },
+    {
+      "id": "p21",
+      "coordenadas": [
+        -76.96124002590204,
+        -12.10519640031969
+      ]
+    },
+    {
+      "id": "p22",
+      "coordenadas": [
+        -76.96119975542778,
+        -12.104950479159161
+      ]
+    },
+    {
+      "id": "p23",
+      "coordenadas": [
+        -76.96132668,
+        -12.10489425
+      ]
+    },
+    {
+      "id": "p24",
+      "coordenadas": [
+        -76.96124233447193,
+        -12.105006136618046
+      ]
+    },
+    {
+      "id": "p25",
+      "coordenadas": [
+        -76.96130847318268,
+        -12.105039947364531
+      ]
+    },
+    {
+      "id": "p26",
+      "coordenadas": [
+        -76.9613616689943,
+        -12.104995719504178
+      ]
+    },
+    {
+      "id": "p27",
+      "coordenadas": [
+        -76.96142829285414,
+        -12.104988389479042
+      ]
+    },
+    {
+      "id": "p28",
+      "coordenadas": [
+        -76.96145398612661,
+        -12.105107580112621
+      ]
+    },
+    {
+      "id": "p29",
+      "coordenadas": [
+        -76.96143641376773,
+        -12.104758240731876
+      ]
+    },
+    {
+      "id": "p30",
+      "coordenadas": [
+        -76.96138216289714,
+        -12.104792994749836
+      ]
+    },
+    {
+      "id": "p31",
+      "coordenadas": [
+        -76.96146100909174,
+        -12.10482967275158
+      ]
+    },
+    {
+      "id": "p32",
+      "coordenadas": [
+        -76.96136064686448,
+        -12.104592051924628
+      ]
+    },
+    {
+      "id": "p33",
+      "coordenadas": [
+        -76.96121487855405,
+        -12.104527309095173
+      ]
+    },
+    {
+      "id": "p34",
+      "coordenadas": [
+        -76.96111020003381,
+        -12.104549667983743
+      ]
+    },
+    {
+      "id": "p35",
+      "coordenadas": [
+        -76.96112319258778,
+        -12.104487566738388
+      ]
+    },
+    {
+      "id": "p36",
+      "coordenadas": [
+        -76.96102656066094,
+        -12.104383370720821
+      ]
+    },
+    {
+      "id": "p37",
+      "coordenadas": [
+        -76.9608803749511,
+        -12.10430493005104
+      ]
+    },
+    {
+      "id": "p38",
+      "coordenadas": [
+        -76.96091477881151,
+        -12.104402569026606
+      ]
+    },
+    {
+      "id": "p39",
+      "coordenadas": [
+        -76.96112500836352,
+        -12.104360170336903
+      ]
+    },
+    {
+      "id": "p40",
+      "coordenadas": [
+        -76.96096274574225,
+        -12.104276176205799
+      ]
+    },
+    {
+      "id": "p41",
+      "coordenadas": [
+        -76.96083265329987,
+        -12.104417203796173
+      ]
+    },
+    {
+      "id": "p42",
+      "coordenadas": [
+        -76.96059347288104,
+        -12.104399620845577
+      ]
+    },
+    {
+      "id": "p43",
+      "coordenadas": [
+        -76.96063852093853,
+        -12.104391879092946
+      ]
+    },
+    {
+      "id": "p44",
+      "coordenadas": [
+        -76.96059785674387,
+        -12.104327736458034
+      ]
+    },
+    {
+      "id": "p45",
+      "coordenadas": [
+        -76.96069492459914,
+        -12.104637370636857
+      ]
+    },
+    {
+      "id": "p46",
+      "coordenadas": [
+        -76.96075553946704,
+        -12.104631638637589
+      ]
+    },
+    {
+      "id": "p47",
+      "coordenadas": [
+        -76.96086176061631,
+        -12.104747541519828
+      ]
+    },
+    {
+      "id": "p48",
+      "coordenadas": [
+        -76.96090279309581,
+        -12.104596995834308
+      ]
+    },
+    {
+      "id": "p49",
+      "coordenadas": [
+        -76.96101238901969,
+        -12.104577586626183
+      ]
+    },
+    {
+      "id": "p50",
+      "coordenadas": [
+        -76.9610142628904,
+        -12.104599050342584
+      ]
+    },
+    {
+      "id": "p51",
+      "coordenadas": [
+        -76.96089455472944,
+        -12.104721262398565
+      ]
+    },
+    {
+      "id": "p52",
+      "coordenadas": [
+        -76.96093187209804,
+        -12.104746941826619
+      ]
+    },
+    {
+      "id": "p53",
+      "coordenadas": [
+        -76.96089567280573,
+        -12.104777152603313
+      ]
+    },
+    {
+      "id": "p54",
+      "coordenadas": [
+        -76.96076956582787,
+        -12.104741374150167
+      ]
+    },
+    {
+      "id": "p55",
+      "coordenadas": [
+        -76.9610012334546,
+        -12.104811257934957
+      ]
+    },
+    {
+      "id": "p56",
+      "coordenadas": [
+        -76.96101912569556,
+        -12.104868985473916
+      ]
+    },
+    {
+      "id": "p57",
+      "coordenadas": [
+        -76.9610977046807,
+        -12.104933574386843
+      ]
+    },
+    {
+      "id": "p58",
+      "coordenadas": [
+        -76.96095214346741,
+        -12.10499136094735
+      ]
+    },
+    {
+      "id": "p59",
+      "coordenadas": [
+        -76.96089490799743,
+        -12.105054247306192
+      ]
+    },
+    {
+      "id": "p60",
+      "coordenadas": [
+        -76.96091897495769,
+        -12.105175152334875
+      ]
+    },
+    {
+      "id": "p61",
+      "coordenadas": [
+        -76.96095735466449,
+        -12.105314062401932
+      ]
+    },
+    {
+      "id": "p62",
+      "coordenadas": [
+        -76.96082463368558,
+        -12.105372569614685
+      ]
+    },
+    {
+      "id": "p63",
+      "coordenadas": [
+        -76.9607200910155,
+        -12.10521298334226
+      ]
+    },
+    {
+      "id": "p65",
+      "coordenadas": [
+        -76.96165222702945,
+        -12.104785118928984
+      ]
+    },
+    {
+      "id": "p66",
+      "coordenadas": [
+        -76.96175147741339,
+        -12.104660358989637
+      ]
+    },
+    {
+      "id": "p67",
+      "coordenadas": [
+        -76.9618659,
+        -12.1045343
+      ]
+    },
+    {
+      "id": "p68",
+      "coordenadas": [
+        -76.9619333,
+        -12.1044347
+      ]
+    },
+    {
+      "id": "p69",
+      "coordenadas": [
+        -76.9620012,
+        -12.1043234
+      ]
+    },
+    {
+      "id": "p70",
+      "coordenadas": [
+        -76.96133248684323,
+        -12.104966572548829
+      ]
+    },
+    {
+      "id": "p71",
+      "coordenadas": [
+        -76.96146873537431,
+        -12.105063709382154
+      ]
+    },
+    {
+      "id": "p72",
+      "coordenadas": [
+        -76.96109185261885,
+        -12.104427339985941
+      ]
+    },
+    {
+      "id": "p73",
+      "coordenadas": [
+        -76.9605603767899,
+        -12.104408073901281
+      ]
+    },
+    {
+      "id": "p74",
+      "coordenadas": [
+        -76.960492408362,
+        -12.104424689462235
+      ]
+    },
+    {
+      "id": "p75",
+      "coordenadas": [
+        -76.96047599402732,
+        -12.104399237862271
+      ]
+    },
+    {
+      "id": "p76",
+      "coordenadas": [
+        -76.96038132055449,
+        -12.104400745849517
+      ]
+    },
+    {
+      "id": "p77",
+      "coordenadas": [
+        -76.96041635460607,
+        -12.10444458783409
+      ]
+    },
+    {
+      "id": "p78",
+      "coordenadas": [
+        -76.96055582111356,
+        -12.104656644624937
+      ]
+    },
+    {
+      "id": "p79",
+      "coordenadas": [
+        -76.96047859690222,
+        -12.104665308716763
+      ]
+    },
+    {
+      "id": "p80",
+      "coordenadas": [
+        -76.96088195620005,
+        -12.104916501974621
+      ]
+    },
+    {
+      "id": "p81",
+      "coordenadas": [
+        -76.96058399620604,
+        -12.105032886290402
+      ]
+    },
+    {
+      "id": "p82",
+      "coordenadas": [
+        -76.96042183378535,
+        -12.10470626051692
+      ]
+    },
+    {
+      "id": "p83",
+      "coordenadas": [
+        -76.96042056629162,
+        -12.104793129026133
+      ]
+    },
+    {
+      "id": "p84",
+      "coordenadas": [
+        -76.96077634574974,
+        -12.10539292484052
+      ]
+    },
+    {
+      "id": "p85",
+      "coordenadas": [
+        -76.9607047758569,
+        -12.105325402743185
+      ]
+    },
+    {
+      "id": "p86",
+      "coordenadas": [
+        -76.96063802918236,
+        -12.105174314694418
+      ]
+    },
+    {
+      "id": "p87",
+      "coordenadas": [
+        -76.96036123469767,
+        -12.10502433254881
+      ]
+    },
+    {
+      "id": "p88",
+      "coordenadas": [
+        -76.96013926765272,
+        -12.104877016151182
+      ]
+    },
+    {
+      "id": "p89",
+      "coordenadas": [
+        -76.96027822940947,
+        -12.104975058917727
+      ]
+    },
+    {
+      "id": "p91",
+      "coordenadas": [
+        -76.96010782602298,
+        -12.105071110827202
+      ]
+    },
+    {
+      "id": "p92",
+      "coordenadas": [
+        -76.96009510113248,
+        -12.1049981641727
+      ]
+    },
+    {
+      "id": "p93",
+      "coordenadas": [
+        -76.95996008591543,
+        -12.104985289305155
+      ]
+    },
+    {
+      "id": "p94",
+      "coordenadas": [
+        -76.95983379341625,
+        -12.104952129779482
+      ]
+    },
+    {
+      "id": "p95",
+      "coordenadas": [
+        -76.95981436069708,
+        -12.104871923723072
+      ]
+    },
+    {
+      "id": "p96",
+      "coordenadas": [
+        -76.95988108744804,
+        -12.104486822131001
+      ]
+    },
+    {
+      "id": "p97",
+      "coordenadas": [
+        -76.96009511826185,
+        -12.104923750732773
+      ]
+    },
+    {
+      "id": "p98",
+      "coordenadas": [
+        -76.9597377542706,
+        -12.10481372219765
+      ]
+    },
+    {
+      "id": "p99",
+      "coordenadas": [
+        -76.9597726659947,
+        -12.104689674361007
+      ]
+    },
+    {
+      "id": "p100",
+      "coordenadas": [
+        -76.96068532820955,
+        -12.10541468409021
+      ]
+    },
+    {
+      "id": "p101",
+      "coordenadas": [
+        -76.96056617212808,
+        -12.105465611962002
+      ]
+    },
+    {
+      "id": "p102",
+      "coordenadas": [
+        -76.96050025789836,
+        -12.105493693899907
+      ]
+    },
+    {
+      "id": "p103",
+      "coordenadas": [
+        -76.96038646404298,
+        -12.105534454258454
+      ]
+    },
+    {
+      "id": "p104",
+      "coordenadas": [
+        -76.9603672806582,
+        -12.10549430881545
+      ]
+    },
+    {
+      "id": "p105",
+      "coordenadas": [
+        -76.96034796415103,
+        -12.10542136235771
+      ]
+    },
+    {
+      "id": "p106",
+      "coordenadas": [
+        -76.96024441014588,
+        -12.105153275297372
+      ]
+    },
+    {
+      "id": "p107",
+      "coordenadas": [
+        -76.96022574309292,
+        -12.105077750545888
+      ]
+    },
+    {
+      "id": "p108",
+      "coordenadas": [
+        -76.96022068905059,
+        -12.105042295474796
+      ]
+    },
+    {
+      "id": "p90",
+      "coordenadas": [
+        -76.96022476545758,
+        -12.105627805510094
+      ]
+    },
+    {
+      "id": "p109",
+      "coordenadas": [
+        -76.9602378544045,
+        -12.105651946928832
+      ]
+    },
+    {
+      "id": "p110",
+      "coordenadas": [
+        -76.9601835744289,
+        -12.10571794637042
+      ]
+    },
+    {
+      "id": "p111",
+      "coordenadas": [
+        -76.96049910822863,
+        -12.105765610053325
+      ]
+    },
+    {
+      "id": "p112",
+      "coordenadas": [
+        -76.96044739772378,
+        -12.105773817438257
+      ]
+    },
+    {
+      "id": "p113",
+      "coordenadas": [
+        -76.9605821783328,
+        -12.105939185937027
+      ]
+    },
+    {
+      "id": "p114",
+      "coordenadas": [
+        -76.96032827365454,
+        -12.106076971278641
+      ]
+    },
+    {
+      "id": "p115",
+      "coordenadas": [
+        -76.96072195701088,
+        -12.106232187921183
+      ]
+    },
+    {
+      "id": "p116",
+      "coordenadas": [
+        -76.96051094056892,
+        -12.106463981324465
+      ]
+    },
+    {
+      "id": "p117",
+      "coordenadas": [
+        -76.96047144463093,
+        -12.106460918832623
+      ]
+    },
+    {
+      "id": "p118",
+      "coordenadas": [
+        -76.96040815751755,
+        -12.106523295023095
+      ]
+    },
+    {
+      "id": "p119",
+      "coordenadas": [
+        -76.96039030805707,
+        -12.10651582403579
+      ]
+    },
+    {
+      "id": "p120",
+      "coordenadas": [
+        -76.96033235067262,
+        -12.10658852587429
+      ]
+    },
+    {
+      "id": "p121",
+      "coordenadas": [
+        -76.96041952500548,
+        -12.10665879147697
+      ]
+    },
+    {
+      "id": "p122",
+      "coordenadas": [
+        -76.96034511467118,
+        -12.106759066217103
+      ]
+    },
+    {
+      "id": "p123",
+      "coordenadas": [
+        -76.9607522903453,
+        -12.106287285388406
+      ]
+    },
+    {
+      "id": "p124",
+      "coordenadas": [
+        -76.96079452723339,
+        -12.106262667908895
+      ]
+    },
+    {
+      "id": "p125",
+      "coordenadas": [
+        -76.96088386423293,
+        -12.106209925582013
+      ]
+    },
+    {
+      "id": "p126",
+      "coordenadas": [
+        -76.9609799419824,
+        -12.106119164142166
+      ]
+    },
+    {
+      "id": "p127",
+      "coordenadas": [
+        -76.96101930386176,
+        -12.106099888295411
+      ]
+    },
+    {
+      "id": "p128",
+      "coordenadas": [
+        -76.9607283060327,
+        -12.105405416124107
+      ]
+    },
+    {
+      "id": "p129",
+      "coordenadas": [
+        -76.96112778804623,
+        -12.105998125095969
+      ]
+    },
+    {
+      "id": "p130",
+      "coordenadas": [
+        -76.96094998363229,
+        -12.105628216322792
+      ]
+    },
+    {
+      "id": "p131",
+      "coordenadas": [
+        -76.96087965039787,
+        -12.105508025233721
+      ]
+    },
+    {
+      "id": "p132",
+      "coordenadas": [
+        -76.96129399650721,
+        -12.10547619609273
+      ]
+    },
+    {
+      "id": "p133",
+      "coordenadas": [
+        -76.96168996080247,
+        -12.104995417221831
+      ]
+    },
+    {
+      "id": "p134",
+      "coordenadas": [
+        -76.96079264540022,
+        -12.104991100231906
+      ]
+    },
+    {
+      "id": "p135",
+      "coordenadas": [
+        -76.96074219378218,
+        -12.104999533511007
+      ]
+    },
+    {
+      "id": "p19",
+      "coordenadas": [
+        -76.96022694813307,
+        -12.104408399539235
+      ]
+    },
+    {
+      "id": "p136",
+      "coordenadas": [
+        -76.96016854756982,
+        -12.10437727093426
+      ]
+    },
+    {
+      "id": "p137",
+      "coordenadas": [
+        -76.96011272634634,
+        -12.104378106910557
+      ]
+    },
+    {
+      "id": "p138",
+      "coordenadas": [
+        -76.96005485928605,
+        -12.104332225548886
+      ]
+    },
+    {
+      "id": "p139",
+      "coordenadas": [
+        -76.95995199515943,
+        -12.104299015120153
+      ]
+    },
+    {
+      "id": "p140",
+      "coordenadas": [
+        -76.9599617374405,
+        -12.1042357113724
+      ]
+    },
+    {
+      "id": "p141",
+      "coordenadas": [
+        -76.9600446138538,
+        -12.10438855718623
+      ]
+    },
+    {
+      "id": "p143",
+      "coordenadas": [
+        -76.96038441747615,
+        -12.104361128766715
+      ]
+    },
+    {
+      "id": "p144",
+      "coordenadas": [
+        -76.95977414968782,
+        -12.10421375461908
+      ]
+    },
+    {
+      "id": "p142",
+      "coordenadas": [
+        -76.95991595510476,
+        -12.104357953270627
+      ]
+    },
+    {
+      "id": "p145",
+      "coordenadas": [
+        -76.96159863,
+        -12.10517041
+      ]
+    },
+    {
+      "id": "p146",
+      "coordenadas": [
+        -76.96165095,
+        -12.10471717
+      ]
+    },
+    {
+      "id": "p148",
+      "coordenadas": [
+        -76.9615847,
+        -12.10469378
+      ]
+    },
+    {
+      "id": "p149",
+      "coordenadas": [
+        -76.96140445,
+        -12.10527168
+      ]
+    },
+    {
+      "id": "p150",
+      "coordenadas": [
+        -76.96112914,
+        -12.10554617
+      ]
+    },
+    {
+      "id": "p151",
+      "coordenadas": [
+        -76.96115023,
+        -12.10562234
+      ]
+    },
+    {
+      "id": "p152",
+      "coordenadas": [
+        -76.96101976,
+        -12.10527752
+      ]
+    },
+    {
+      "id": "p153",
+      "coordenadas": [
+        -76.96098525,
+        -12.10529179
+      ]
+    },
+    {
+      "id": "p154",
+      "coordenadas": [
+        -76.96102592,
+        -12.1046909
+      ]
+    },
+    {
+      "id": "p155",
+      "coordenadas": [
+        -76.96090677,
+        -12.10466913
+      ]
+    },
+    {
+      "id": "p157",
+      "coordenadas": [
+        -76.96112229,
+        -12.10539599
+      ]
+    }
+  ],
+  "aristas": [
+    {
+      "desde": "p69",
+      "hasta": "p68",
+      "distancia_metros": 14.411
+    },
+    {
+      "desde": "p67",
+      "hasta": "p68",
+      "distancia_metros": 13.28
+    },
+    {
+      "desde": "p66",
+      "hasta": "p67",
+      "distancia_metros": 18.741
+    },
+    {
+      "desde": "p66",
+      "hasta": "p65",
+      "distancia_metros": 17.575
+    },
+    {
+      "desde": "p65",
+      "hasta": "p133",
+      "distancia_metros": 23.741
+    },
+    {
+      "desde": "p133",
+      "hasta": "p4",
+      "distancia_metros": 15.128
+    },
+    {
+      "desde": "p29",
+      "hasta": "p31",
+      "distancia_metros": 8.381
+    },
+    {
+      "desde": "p31",
+      "hasta": "p5",
+      "distancia_metros": 13.839
+    },
+    {
+      "desde": "p5",
+      "hasta": "p4",
+      "distancia_metros": 12.981
+    },
+    {
+      "desde": "p5",
+      "hasta": "p71",
+      "distancia_metros": 14.136
+    },
+    {
+      "desde": "p71",
+      "hasta": "p28",
+      "distancia_metros": 5.135
+    },
+    {
+      "desde": "p28",
+      "hasta": "p4",
+      "distancia_metros": 13.428
+    },
+    {
+      "desde": "p28",
+      "hasta": "p3",
+      "distancia_metros": 10.25
+    },
+    {
+      "desde": "p3",
+      "hasta": "p25",
+      "distancia_metros": 14.009
+    },
+    {
+      "desde": "p25",
+      "hasta": "p26",
+      "distancia_metros": 7.592
+    },
+    {
+      "desde": "p26",
+      "hasta": "p27",
+      "distancia_metros": 7.289
+    },
+    {
+      "desde": "p27",
+      "hasta": "p5",
+      "distancia_metros": 10.351
+    },
+    {
+      "desde": "p27",
+      "hasta": "p71",
+      "distancia_metros": 9.459
+    },
+    {
+      "desde": "p26",
+      "hasta": "p70",
+      "distancia_metros": 4.535
+    },
+    {
+      "desde": "p70",
+      "hasta": "p23",
+      "distancia_metros": 8.067
+    },
+    {
+      "desde": "p23",
+      "hasta": "p30",
+      "distancia_metros": 12.773
+    },
+    {
+      "desde": "p30",
+      "hasta": "p29",
+      "distancia_metros": 7.052
+    },
+    {
+      "desde": "p30",
+      "hasta": "p31",
+      "distancia_metros": 9.493
+    },
+    {
+      "desde": "p29",
+      "hasta": "p32",
+      "distancia_metros": 20.232
+    },
+    {
+      "desde": "p32",
+      "hasta": "p6",
+      "distancia_metros": 12.06
+    },
+    {
+      "desde": "p6",
+      "hasta": "p7",
+      "distancia_metros": 6.827
+    },
+    {
+      "desde": "p6",
+      "hasta": "p33",
+      "distancia_metros": 9.019
+    },
+    {
+      "desde": "p33",
+      "hasta": "p35",
+      "distancia_metros": 10.904
+    },
+    {
+      "desde": "p35",
+      "hasta": "p34",
+      "distancia_metros": 7.048
+    },
+    {
+      "desde": "p34",
+      "hasta": "p33",
+      "distancia_metros": 11.649
+    },
+    {
+      "desde": "p34",
+      "hasta": "p49",
+      "distancia_metros": 11.078
+    },
+    {
+      "desde": "p49",
+      "hasta": "p50",
+      "distancia_metros": 2.395
+    },
+    {
+      "desde": "p35",
+      "hasta": "p72",
+      "distancia_metros": 7.514
+    },
+    {
+      "desde": "p72",
+      "hasta": "p36",
+      "distancia_metros": 8.62
+    },
+    {
+      "desde": "p36",
+      "hasta": "p39",
+      "distancia_metros": 11.01
+    },
+    {
+      "desde": "p8",
+      "hasta": "p39",
+      "distancia_metros": 11.29
+    },
+    {
+      "desde": "p8",
+      "hasta": "p9",
+      "distancia_metros": 4.49
+    },
+    {
+      "desde": "p40",
+      "hasta": "p37",
+      "distancia_metros": 9.509
+    },
+    {
+      "desde": "p37",
+      "hasta": "p38",
+      "distancia_metros": 11.483
+    },
+    {
+      "desde": "p38",
+      "hasta": "p36",
+      "distancia_metros": 12.339
+    },
+    {
+      "desde": "p38",
+      "hasta": "p10",
+      "distancia_metros": 7.698
+    },
+    {
+      "desde": "p10",
+      "hasta": "p41",
+      "distancia_metros": 5.841
+    },
+    {
+      "desde": "p10",
+      "hasta": "p48",
+      "distancia_metros": 16.136
+    },
+    {
+      "desde": "p49",
+      "hasta": "p48",
+      "distancia_metros": 12.109
+    },
+    {
+      "desde": "p48",
+      "hasta": "p46",
+      "distancia_metros": 16.467
+    },
+    {
+      "desde": "p43",
+      "hasta": "p41",
+      "distancia_metros": 21.294
+    },
+    {
+      "desde": "p43",
+      "hasta": "p42",
+      "distancia_metros": 4.973
+    },
+    {
+      "desde": "p42",
+      "hasta": "p44",
+      "distancia_metros": 8.007
+    },
+    {
+      "desde": "p42",
+      "hasta": "p73",
+      "distancia_metros": 3.719
+    },
+    {
+      "desde": "p73",
+      "hasta": "p74",
+      "distancia_metros": 7.617
+    },
+    {
+      "desde": "p74",
+      "hasta": "p75",
+      "distancia_metros": 3.346
+    },
+    {
+      "desde": "p75",
+      "hasta": "p76",
+      "distancia_metros": 10.295
+    },
+    {
+      "desde": "p76",
+      "hasta": "p77",
+      "distancia_metros": 6.187
+    },
+    {
+      "desde": "p77",
+      "hasta": "p74",
+      "distancia_metros": 8.56
+    },
+    {
+      "desde": "p77",
+      "hasta": "p79",
+      "distancia_metros": 25.459
+    },
+    {
+      "desde": "p79",
+      "hasta": "p78",
+      "distancia_metros": 8.451
+    },
+    {
+      "desde": "p78",
+      "hasta": "p11",
+      "distancia_metros": 8.023
+    },
+    {
+      "desde": "p11",
+      "hasta": "p45",
+      "distancia_metros": 7.3
+    },
+    {
+      "desde": "p45",
+      "hasta": "p43",
+      "distancia_metros": 27.978
+    },
+    {
+      "desde": "p73",
+      "hasta": "p11",
+      "distancia_metros": 26.934
+    },
+    {
+      "desde": "p78",
+      "hasta": "p74",
+      "distancia_metros": 26.698
+    },
+    {
+      "desde": "p46",
+      "hasta": "p45",
+      "distancia_metros": 6.621
+    },
+    {
+      "desde": "p79",
+      "hasta": "p82",
+      "distancia_metros": 7.67
+    },
+    {
+      "desde": "p82",
+      "hasta": "p83",
+      "distancia_metros": 9.66
+    },
+    {
+      "desde": "p46",
+      "hasta": "p13",
+      "distancia_metros": 14.458
+    },
+    {
+      "desde": "p13",
+      "hasta": "p12",
+      "distancia_metros": 6.674
+    },
+    {
+      "desde": "p12",
+      "hasta": "p54",
+      "distancia_metros": 4.795
+    },
+    {
+      "desde": "p12",
+      "hasta": "p14",
+      "distancia_metros": 11.167
+    },
+    {
+      "desde": "p14",
+      "hasta": "p53",
+      "distancia_metros": 9.795
+    },
+    {
+      "desde": "p53",
+      "hasta": "p47",
+      "distancia_metros": 4.943
+    },
+    {
+      "desde": "p47",
+      "hasta": "p13",
+      "distancia_metros": 3.813
+    },
+    {
+      "desde": "p47",
+      "hasta": "p51",
+      "distancia_metros": 4.61
+    },
+    {
+      "desde": "p52",
+      "hasta": "p51",
+      "distancia_metros": 4.961
+    },
+    {
+      "desde": "p52",
+      "hasta": "p53",
+      "distancia_metros": 5.174
+    },
+    {
+      "desde": "p52",
+      "hasta": "p55",
+      "distancia_metros": 10.393
+    },
+    {
+      "desde": "p55",
+      "hasta": "p56",
+      "distancia_metros": 6.707
+    },
+    {
+      "desde": "p56",
+      "hasta": "p57",
+      "distancia_metros": 11.161
+    },
+    {
+      "desde": "p57",
+      "hasta": "p58",
+      "distancia_metros": 17.081
+    },
+    {
+      "desde": "p58",
+      "hasta": "p80",
+      "distancia_metros": 11.292
+    },
+    {
+      "desde": "p80",
+      "hasta": "p14",
+      "distancia_metros": 7.48
+    },
+    {
+      "desde": "p80",
+      "hasta": "p56",
+      "distancia_metros": 15.822
+    },
+    {
+      "desde": "p58",
+      "hasta": "p15",
+      "distancia_metros": 8.443
+    },
+    {
+      "desde": "p16",
+      "hasta": "p15",
+      "distancia_metros": 7.892
+    },
+    {
+      "desde": "p16",
+      "hasta": "p17",
+      "distancia_metros": 5.872
+    },
+    {
+      "desde": "p16",
+      "hasta": "p134",
+      "distancia_metros": 2.223
+    },
+    {
+      "desde": "p17",
+      "hasta": "p135",
+      "distancia_metros": 2.063
+    },
+    {
+      "desde": "p17",
+      "hasta": "p18",
+      "distancia_metros": 7.972
+    },
+    {
+      "desde": "p81",
+      "hasta": "p79",
+      "distancia_metros": 42.449
+    },
+    {
+      "desde": "p18",
+      "hasta": "p63",
+      "distancia_metros": 21.515
+    },
+    {
+      "desde": "p15",
+      "hasta": "p59",
+      "distancia_metros": 6.383
+    },
+    {
+      "desde": "p59",
+      "hasta": "p60",
+      "distancia_metros": 13.696
+    },
+    {
+      "desde": "p23",
+      "hasta": "p22",
+      "distancia_metros": 15.15
+    },
+    {
+      "desde": "p22",
+      "hasta": "p57",
+      "distancia_metros": 11.253
+    },
+    {
+      "desde": "p22",
+      "hasta": "p24",
+      "distancia_metros": 7.729
+    },
+    {
+      "desde": "p24",
+      "hasta": "p70",
+      "distancia_metros": 10.744
+    },
+    {
+      "desde": "p25",
+      "hasta": "p24",
+      "distancia_metros": 8.114
+    },
+    {
+      "desde": "p24",
+      "hasta": "p2",
+      "distancia_metros": 10.124
+    },
+    {
+      "desde": "p2",
+      "hasta": "p21",
+      "distancia_metros": 16.58
+    },
+    {
+      "desde": "p2",
+      "hasta": "p20",
+      "distancia_metros": 21.101
+    },
+    {
+      "desde": "p20",
+      "hasta": "p21",
+      "distancia_metros": 15.206
+    },
+    {
+      "desde": "p21",
+      "hasta": "p3",
+      "distancia_metros": 15.079
+    },
+    {
+      "desde": "p21",
+      "hasta": "p1",
+      "distancia_metros": 15.472
+    },
+    {
+      "desde": "p20",
+      "hasta": "p1",
+      "distancia_metros": 15.511
+    },
+    {
+      "desde": "p1",
+      "hasta": "p132",
+      "distancia_metros": 17.866
+    },
+    {
+      "desde": "p60",
+      "hasta": "p61",
+      "distancia_metros": 16
+    },
+    {
+      "desde": "p60",
+      "hasta": "p63",
+      "distancia_metros": 22.029
+    },
+    {
+      "desde": "p63",
+      "hasta": "p84",
+      "distancia_metros": 20.923
+    },
+    {
+      "desde": "p84",
+      "hasta": "p62",
+      "distancia_metros": 5.717
+    },
+    {
+      "desde": "p62",
+      "hasta": "p61",
+      "distancia_metros": 15.829
+    },
+    {
+      "desde": "p128",
+      "hasta": "p84",
+      "distancia_metros": 5.405
+    },
+    {
+      "desde": "p128",
+      "hasta": "p85",
+      "distancia_metros": 9.258
+    },
+    {
+      "desde": "p85",
+      "hasta": "p86",
+      "distancia_metros": 18.301
+    },
+    {
+      "desde": "p128",
+      "hasta": "p100",
+      "distancia_metros": 4.785
+    },
+    {
+      "desde": "p63",
+      "hasta": "p86",
+      "distancia_metros": 9.904
+    },
+    {
+      "desde": "p86",
+      "hasta": "p87",
+      "distancia_metros": 34.406
+    },
+    {
+      "desde": "p87",
+      "hasta": "p81",
+      "distancia_metros": 24.238
+    },
+    {
+      "desde": "p18",
+      "hasta": "p81",
+      "distancia_metros": 10.12
+    },
+    {
+      "desde": "p87",
+      "hasta": "p89",
+      "distancia_metros": 10.558
+    },
+    {
+      "desde": "p87",
+      "hasta": "p108",
+      "distancia_metros": 15.41
+    },
+    {
+      "desde": "p108",
+      "hasta": "p91",
+      "distancia_metros": 12.682
+    },
+    {
+      "desde": "p91",
+      "hasta": "p92",
+      "distancia_metros": 8.228
+    },
+    {
+      "desde": "p92",
+      "hasta": "p93",
+      "distancia_metros": 14.749
+    },
+    {
+      "desde": "p93",
+      "hasta": "p94",
+      "distancia_metros": 14.217
+    },
+    {
+      "desde": "p94",
+      "hasta": "p95",
+      "distancia_metros": 9.165
+    },
+    {
+      "desde": "p89",
+      "hasta": "p97",
+      "distancia_metros": 20.71
+    },
+    {
+      "desde": "p97",
+      "hasta": "p88",
+      "distancia_metros": 7.074
+    },
+    {
+      "desde": "p97",
+      "hasta": "p98",
+      "distancia_metros": 40.734
+    },
+    {
+      "desde": "p98",
+      "hasta": "p99",
+      "distancia_metros": 14.306
+    },
+    {
+      "desde": "p95",
+      "hasta": "p96",
+      "distancia_metros": 43.432
+    },
+    {
+      "desde": "p108",
+      "hasta": "p107",
+      "distancia_metros": 3.981
+    },
+    {
+      "desde": "p107",
+      "hasta": "p106",
+      "distancia_metros": 8.64
+    },
+    {
+      "desde": "p106",
+      "hasta": "p105",
+      "distancia_metros": 31.865
+    },
+    {
+      "desde": "p105",
+      "hasta": "p104",
+      "distancia_metros": 8.379
+    },
+    {
+      "desde": "p104",
+      "hasta": "p103",
+      "distancia_metros": 4.927
+    },
+    {
+      "desde": "p103",
+      "hasta": "p102",
+      "distancia_metros": 13.176
+    },
+    {
+      "desde": "p102",
+      "hasta": "p101",
+      "distancia_metros": 7.817
+    },
+    {
+      "desde": "p101",
+      "hasta": "p100",
+      "distancia_metros": 14.139
+    },
+    {
+      "desde": "p103",
+      "hasta": "p90",
+      "distancia_metros": 20.416
+    },
+    {
+      "desde": "p90",
+      "hasta": "p109",
+      "distancia_metros": 3.038
+    },
+    {
+      "desde": "p90",
+      "hasta": "p110",
+      "distancia_metros": 10.978
+    },
+    {
+      "desde": "p103",
+      "hasta": "p111",
+      "distancia_metros": 28.472
+    },
+    {
+      "desde": "p111",
+      "hasta": "p112",
+      "distancia_metros": 5.696
+    },
+    {
+      "desde": "p111",
+      "hasta": "p113",
+      "distancia_metros": 21.309
+    },
+    {
+      "desde": "p113",
+      "hasta": "p114",
+      "distancia_metros": 31.572
+    },
+    {
+      "desde": "p113",
+      "hasta": "p115",
+      "distancia_metros": 35.95
+    },
+    {
+      "desde": "p115",
+      "hasta": "p123",
+      "distancia_metros": 6.958
+    },
+    {
+      "desde": "p123",
+      "hasta": "p124",
+      "distancia_metros": 5.346
+    },
+    {
+      "desde": "p124",
+      "hasta": "p125",
+      "distancia_metros": 11.346
+    },
+    {
+      "desde": "p125",
+      "hasta": "p126",
+      "distancia_metros": 14.525
+    },
+    {
+      "desde": "p126",
+      "hasta": "p127",
+      "distancia_metros": 4.786
+    },
+    {
+      "desde": "p127",
+      "hasta": "p129",
+      "distancia_metros": 16.345
+    },
+    {
+      "desde": "p127",
+      "hasta": "p100",
+      "distancia_metros": 84.401
+    },
+    {
+      "desde": "p115",
+      "hasta": "p116",
+      "distancia_metros": 34.506
+    },
+    {
+      "desde": "p116",
+      "hasta": "p117",
+      "distancia_metros": 4.308
+    },
+    {
+      "desde": "p117",
+      "hasta": "p118",
+      "distancia_metros": 9.77
+    },
+    {
+      "desde": "p118",
+      "hasta": "p119",
+      "distancia_metros": 2.111
+    },
+    {
+      "desde": "p119",
+      "hasta": "p120",
+      "distancia_metros": 10.25
+    },
+    {
+      "desde": "p120",
+      "hasta": "p121",
+      "distancia_metros": 12.283
+    },
+    {
+      "desde": "p122",
+      "hasta": "p121",
+      "distancia_metros": 13.776
+    },
+    {
+      "desde": "p129",
+      "hasta": "p130",
+      "distancia_metros": 45.448
+    },
+    {
+      "desde": "p130",
+      "hasta": "p131",
+      "distancia_metros": 15.398
+    },
+    {
+      "desde": "p131",
+      "hasta": "p62",
+      "distancia_metros": 16.206
+    },
+    {
+      "desde": "p76",
+      "hasta": "p19",
+      "distancia_metros": 16.805
+    },
+    {
+      "desde": "p143",
+      "hasta": "p76",
+      "distancia_metros": 4.418
+    },
+    {
+      "desde": "p19",
+      "hasta": "p136",
+      "distancia_metros": 7.232
+    },
+    {
+      "desde": "p136",
+      "hasta": "p137",
+      "distancia_metros": 6.07
+    },
+    {
+      "desde": "p137",
+      "hasta": "p138",
+      "distancia_metros": 8.1
+    },
+    {
+      "desde": "p138",
+      "hasta": "p141",
+      "distancia_metros": 6.362
+    },
+    {
+      "desde": "p138",
+      "hasta": "p139",
+      "distancia_metros": 11.778
+    },
+    {
+      "desde": "p139",
+      "hasta": "p140",
+      "distancia_metros": 7.118
+    },
+    {
+      "desde": "p139",
+      "hasta": "p144",
+      "distancia_metros": 21.535
+    },
+    {
+      "desde": "p141",
+      "hasta": "p142",
+      "distancia_metros": 14.396
+    },
+    {
+      "desde": "p14",
+      "hasta": "p15",
+      "distancia_metros": 16.299
+    },
+    {
+      "desde": "p4",
+      "hasta": "p145",
+      "distancia_metros": 14.005
+    },
+    {
+      "desde": "p66",
+      "hasta": "p146",
+      "distancia_metros": 12.624
+    },
+    {
+      "desde": "p148",
+      "hasta": "p146",
+      "distancia_metros": 7.658
+    },
+    {
+      "desde": "p148",
+      "hasta": "p29",
+      "distancia_metros": 17.644
+    },
+    {
+      "desde": "p3",
+      "hasta": "p149",
+      "distancia_metros": 13.984
+    },
+    {
+      "desde": "p150",
+      "hasta": "p151",
+      "distancia_metros": 8.775
+    },
+    {
+      "desde": "p132",
+      "hasta": "p150",
+      "distancia_metros": 19.54
+    },
+    {
+      "desde": "p150",
+      "hasta": "p130",
+      "distancia_metros": 21.509
+    },
+    {
+      "desde": "p152",
+      "hasta": "p153",
+      "distancia_metros": 4.074
+    },
+    {
+      "desde": "p152",
+      "hasta": "p20",
+      "distancia_metros": 10.385
+    },
+    {
+      "desde": "p61",
+      "hasta": "p153",
+      "distancia_metros": 3.916
+    },
+    {
+      "desde": "p50",
+      "hasta": "p154",
+      "distancia_metros": 10.292
+    },
+    {
+      "desde": "p55",
+      "hasta": "p154",
+      "distancia_metros": 13.65
+    },
+    {
+      "desde": "p155",
+      "hasta": "p50",
+      "distancia_metros": 14.047
+    },
+    {
+      "desde": "p155",
+      "hasta": "p51",
+      "distancia_metros": 5.947
+    },
+    {
+      "desde": "p150",
+      "hasta": "p157",
+      "distancia_metros": 16.716
+    }
+  ]
+}

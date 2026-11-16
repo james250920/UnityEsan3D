@@ -1,0 +1,486 @@
+{
+  "elementos": [
+    {
+      "nombre_original": "Base_Terreno",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "Base_Terreno.001",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "Circulo_Cancha",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path1",
+      "sobrenombre": "Acceso ESAN",
+      "coordenadas": [-76.9618866260981,-12.104389564041181],
+      "aulas": []
+    },
+    {
+      "nombre_original": "path2",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path3",
+      "sobrenombre": "Edificio A",
+      "coordenadas": [-76.96100905533112,-12.105431393779359],
+      "aulas": []
+    },
+    {
+      "nombre_original": "path3",
+      "sobrenombre": "Edificio A",
+      "coordenadas": [-76.96092994953395,-12.105752866010596],
+      "aulas": []
+    },
+    {
+      "nombre_original": "path4",
+      "sobrenombre": "Edificio B",
+      "coordenadas": [-76.96121942501699,-12.10566927273475],
+      "aulas": []
+    },
+    {
+      "nombre_original": "path5",
+      "sobrenombre": "Cafetería JyC",
+      "coordenadas": [-76.96081460533793,-12.105116975930073],
+      "aulas": []
+    },
+    {
+      "nombre_original": "path6",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path7",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path8",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path9",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path10",
+      "sobrenombre": "Laboratorios Química y Física",
+      "coordenadas": [-76.96032546076589,-12.104386601354433],
+      "aulas": []
+    },
+    {
+      "nombre_original": "path11",
+      "sobrenombre": "FabLab ESAN",
+      "coordenadas": [-76.95997543275304,-12.104201711934335],
+      "aulas": []
+    },
+    {
+      "nombre_original": "path12",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path13",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path14",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path16",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path17",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path18",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path19",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path20",
+      "sobrenombre": "ESAN Data",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path21",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path22",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path23",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path24",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path25",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path26",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path27",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path28",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path29",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path30",
+      "sobrenombre": "Edificio D",
+      "coordenadas": [-76.96147071537902, -12.105278374850954],
+      "aulas": ["D101", "D102"]
+    },
+    {
+      "nombre_original": "path31",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path32",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path33",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path34",
+      "sobrenombre": "D",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path35",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path36",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path37",
+      "sobrenombre": "A",
+      "coordenadas": [-76.9610574,
+          -12.1044829],
+      "aulas": []
+    },
+     {
+      "nombre_original": "path37",
+      "sobrenombre": "B",
+      "coordenadas": [-76.9609589,
+          -12.1045275],
+      "aulas": []
+    },
+    {
+      "nombre_original": "path38",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path39",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path40",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path41",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path42",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path43",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path44",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path46",
+      "sobrenombre": "Cajero BBVA",
+      "coordenadas": [-76.96101709315900,-12.105250928589350],
+      "aulas": []
+    },
+    {
+      "nombre_original": "path47",
+      "sobrenombre": "Cajero BCP",
+      "coordenadas": [-76.9609916121734,-12.105274531695157],
+      "aulas": []
+    },  
+    {
+      "nombre_original": "path48",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path55",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path59",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path60",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path61",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path62",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path63",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path64",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path65",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path66",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path67",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path68",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path69",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path72",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path73",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path74",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path75",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path75.001",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path75.002",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path75.003",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path76",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path78",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path79",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path80",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path81",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path82",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path83",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path84",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path85",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    },
+    {
+      "nombre_original": "path86",
+      "sobrenombre": "",
+      "coordenadas": null,
+      "aulas": []
+    }
+  ]
+}
