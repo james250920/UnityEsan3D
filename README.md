@@ -1,10 +1,9 @@
 # UnityEsan3D
 
 Guía en realidad aumentada del campus de ESAN para Android, hecha con Unity y Vuforia.
-La app muestra sobre la cámara el camino hacia un lugar del campus, reconoce marcadores (la pileta) para mostrar a
-Chuwi y abre el mapa web del campus sin salir de la app.
-
-Es la migración a Unity de la experiencia inmersiva del mapa web (`esan-mapa`). El mapa 3D sigue siendo la web.
+La app lleva hasta el evento de ESAN: muestra sobre la cámara el camino hacia el evento, reconoce marcadores (la
+pileta) para mostrar a Chuwi e incluye el mapa 3D del campus hecho en Unity, con la ruta, el evento y tu ubicación.
+No depende del mapa web.
 
 ## Requisitos
 
@@ -58,9 +57,8 @@ Los valores son longitud, latitud y rumbo (0 = norte).
 | --- | --- |
 | `Assets/Esan/Scripts/Core/` | Coordenadas, rutas con A\* y progreso sobre la ruta. No dependen de Unity. |
 | `Assets/Esan/Scripts/` | Datos, interfaz, GPS, orientación, guía sobre el suelo y marcadores. |
-| `Assets/Esan/Resources/` | Grafo de caminos, lugares y perímetro del campus, fotos de los marcadores y modelo de Chuwi. |
+| `Assets/Esan/Resources/` | Grafo de caminos, eventos, perímetro y calibración del campus, fotos de los marcadores y modelos de Chuwi y del campus. |
 | `Assets/Esan/Editor/` | Menú de compilación para Android. |
-| `Assets/Plugins/Android/` | Ventana con el mapa web dentro de la app. |
 | `Assets/Scenes/Main scene.unity` | La única escena. |
 | `PruebasCore/` | Pruebas del código de `Core` fuera de Unity. |
 

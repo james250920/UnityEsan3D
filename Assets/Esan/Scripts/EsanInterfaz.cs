@@ -1,7 +1,8 @@
 // Interfaz de la experiencia inmersiva, la misma del mapa web: barra superior, estado, tarjeta de destino,
-// indicación de giro y lista de lugares. Se construye por código al iniciar la escena, sin prefabs.
+// indicación de giro y lista de eventos, y la del mapa 3D del campus. Se construye por código al iniciar la escena, sin prefabs.
 // Las medidas van en las mismas unidades que los píxeles CSS de la web (pantalla de 390 de ancho).
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -13,16 +14,17 @@ namespace Esan
 {
     public sealed class EsanInterfaz : MonoBehaviour
     {
-        const string MapaWeb = "https://esan3d.menfroyt-dev.com/", DominioMapa = "esan3d.menfroyt-dev.com";
         // Los mismos valores que navigation en ar-config.js del mapa web.
+        static readonly double PrecisionMaxima = new ConfigUbicacion().MaxPrecisionParaGuiaMetros;
         const double AnticipoMetros = 12, RecalcularMetros = 25, AjusteMinMetros = 8, AjusteMaxMetros = 15, LlegadaMinMetros = 15, LlegadaMaxMetros = 30;
 
         static readonly Color Tinta = Hex("253d32"), Apagado = Hex("617269"), Rojo = Hex("ae2239"), Verde = Hex("237044"), Ambar = Hex("7a5a00"), Granate = Hex("a51d35");
-        static readonly Color Panel = new Color(1, 1, 1, .94f), VerdeClaro = Hex("e3f3ea"), VerdeOscuro = Hex("14492d"), Gris = Hex("eef1ee"), Rosa = Hex("f9e8ec");
+        static readonly Color AzulUsuario = Hex("1a73e8"), Panel = new Color(1, 1, 1, .94f), VerdeClaro = Hex("e3f3ea"), VerdeOscuro = Hex("14492d"), Gris = Hex("eef1ee"), Rosa = Hex("f9e8ec");
 
         EsanUbicacion gps;
         EsanOrientacion orientacion;
         EsanGuia guia;
+        EsanMapa mapa;
         GrafoCaminos grafo;
         List<Lugar> lugares;
         Lugar destino;
@@ -39,6 +41,20 @@ namespace Esan
         GameObject cajaMensaje, cajaIndicacion, selector;
         RectTransform borde, flechaBorde;
         RectTransform listaLugares;
+        // Mapa
+        RectTransform capaCamara, capaMapa, pinEvento, puntoUsuario;
+        Text mapaNombre, mapaLinea, textoPin, botonEvento, rotulo3D, rotuloPlano;
+        Image fondo3D, fondoPlano;
+        Ruta rutaMapa;
+        Coord rutaMapaDesde;
+        Lugar rutaMapaHasta;
+        // Carga, avisos y diálogos
+        GameObject cargando, banda, dialogo;
+        RectTransform giroCarga, accionesDialogo;
+        Text textoCarga, textoBanda, accionBanda, tituloDialogo, textoDialogo;
+        Action alPulsarBanda;
+        string bandaVisible, bandaDescartada;
+        bool abriendoMapa;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         static void Arrancar()
@@ -49,13 +65,17 @@ namespace Esan
         void Awake()
         {
             grafo = EsanDatos.CargarGrafo();
-            lugares = EsanDatos.CargarLugares();
+            lugares = EsanDatos.CargarEventos();
             gps = gameObject.AddComponent<EsanUbicacion>();
             gps.Preparar(new Ubicacion(EsanDatos.CargarPerimetro()));
             gps.Cambio += Actualizar;
             orientacion = gameObject.AddComponent<EsanOrientacion>();
             guia = gameObject.AddComponent<EsanGuia>();
-            guia.Preparar(orientacion, lugares.Count > 0 ? lugares[0].Coordenada : new Coord(-76.9612, -12.1050));
+            guia.Preparar(orientacion, new Coord(-76.9612, -12.1050));
+            mapa = gameObject.AddComponent<EsanMapa>();
+            mapa.Preparar(EsanDatos.CargarCalibracion());
+            // La app lleva a un evento: si solo hay uno, ya es el destino.
+            if (lugares.Count == 1) destino = lugares[0];
             // La interfaz y el sensor de orientación están pensados para el celular en vertical.
             Screen.orientation = ScreenOrientation.Portrait;
             EsanMarcadores.Reconocido += AlReconocer;
@@ -75,14 +95,19 @@ namespace Esan
         {
             if (Screen.safeArea != areaSegura) AjustarAreaSegura();
             if (cajaMensaje.activeSelf && ocultarMensaje > 0 && Time.unscaledTime > ocultarMensaje) cajaMensaje.SetActive(false);
-            // Botón Atrás de Android.
-            if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
+            if (cargando.activeSelf) giroCarga.Rotate(0, 0, -360 * Time.unscaledDeltaTime);
+            // Botón Atrás de Android: cierra lo que esté encima antes de salir.
+            if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame && !cargando.activeSelf)
             {
-                if (selector.activeSelf) selector.SetActive(false); else Application.Quit();
+                if (dialogo.activeSelf) dialogo.SetActive(false);
+                else if (selector.activeSelf) selector.SetActive(false);
+                else if (mapa.Abierto) CerrarMapa();
+                else ConfirmarSalida();
             }
+            if (mapa.Abierto) ColocarMarcas();
             orientacion.RumboDeReserva = gps.RumboDeReserva;
             orientacion.ForzarReserva = gps.RumboSimulado;
-            ActualizarBorde();
+            if (!mapa.Abierto) ActualizarBorde();
             if (Time.unscaledTime < proximoRefresco) return;
             gps.Estado.Tic(DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
             Actualizar();
@@ -95,10 +120,14 @@ namespace Esan
             proximoRefresco = Time.unscaledTime + .25f;
             Ubicacion estado = gps.Estado;
             Guia situacion = estado.Guia;
-            textoZona.text = situacion == Guia.Ok ? "Dentro del campus" : situacion == Guia.FueraDelCampus ? "Fuera del campus" : "Ubicación por confirmar";
+            textoZona.text = situacion == Guia.Ok ? "Dentro del campus" : situacion == Guia.FueraDelCampus ? "Fuera del campus"
+                : gps.PermisoNegado ? "Sin permiso de ubicación" : gps.Apagada ? "Ubicación apagada" : !estado.HayLectura ? "Buscando tu ubicación…"
+                : estado.Caducada ? "Ubicación sin actualizar" : estado.Precision > PrecisionMaxima ? "Señal GPS débil" : "Confirmando ubicación…";
             chipZona.color = situacion == Guia.Ok ? Verde : situacion == Guia.FueraDelCampus ? Granate : Ambar;
             double? rumbo = orientacion.Rumbo;
-            textoModo.text = EsanMarcadores.VuforiaFallo ? "Sin cámara" : !EsanMarcadores.VuforiaListo ? "Abriendo cámara…" : rumbo.HasValue ? "RA activa" : "Orientando la guía";
+            if (mapa.Abierto) ActualizarMapa();
+            ActualizarBanda(estado, situacion);
+            textoModo.text = EsanMarcadores.VuforiaFallo ? "Sin cámara" : !EsanMarcadores.VuforiaListo ? "Abriendo cámara…" : rumbo.HasValue ? "Guía lista" : "Orientando la guía";
 
             if (situacion == Guia.Ok && destino != null)
             {
@@ -118,13 +147,15 @@ namespace Esan
             else progreso = null;
 
             etiqueta.gameObject.SetActive(!llegada);
-            nombre.text = llegada ? "¡Llegaste a tu destino!" : destino != null ? destino.Nombre : "Elige un destino";
-            botonElegir.text = llegada ? "Explorar otro lugar" : destino != null ? "Cambiar destino" : "Elegir destino";
-            if (gps.PermisoNegado) linea.text = "Permite la ubicación en los ajustes de la app";
-            else if (gps.Apagada) linea.text = "Activa la ubicación del celular";
-            else if (situacion == Guia.FueraDelCampus) linea.text = "Indicaciones en pausa";
-            else if (situacion != Guia.Ok) linea.text = destino != null ? "Ubicación por confirmar" : "Toca «Elegir destino»";
-            else if (destino == null) linea.text = "Elige un lugar de la lista";
+            nombre.text = llegada ? "¡Llegaste al evento!" : destino != null ? destino.Nombre : lugares.Count == 0 ? "No hay eventos por ahora" : "Elige un evento";
+            botonElegir.text = destino != null ? "Cambiar evento" : "Elegir evento";
+            botonElegir.transform.parent.gameObject.SetActive(lugares.Count > 1);
+            if (destino == null && lugares.Count == 0) linea.text = "Pronto verás aquí cómo llegar";
+            else if (gps.PermisoNegado) linea.text = "Sin permiso de ubicación";
+            else if (gps.Apagada) linea.text = "La ubicación del celular está apagada";
+            else if (situacion == Guia.FueraDelCampus) linea.text = "Las indicaciones empiezan al entrar al campus";
+            else if (situacion != Guia.Ok) linea.text = destino != null ? "Buscando tu ubicación…" : "Toca «Elegir evento»";
+            else if (destino == null) linea.text = "Toca «Elegir evento»";
             else if (llegada) linea.text = destino.Nombre;
             else if (progreso != null)
             {
@@ -132,7 +163,7 @@ namespace Esan
                 double restante = progreso.RestanteMetros + Geo.DistanciaMetros(ruta.Puntos[ruta.Puntos.Count - 1], destino.Coordenada);
                 linea.text = Navegacion.TextoDistancia(restante) + " · " + Navegacion.TiempoAPie(restante);
             }
-            else linea.text = "Sin ruta peatonal disponible";
+            else linea.text = "No encontramos un camino peatonal; guíate con el mapa";
 
             // Cerca del camino, el error del GPS no debe desplazar la guía a un lado: sale de los pies, sobre el camino.
             if (situacion == Guia.Ok && progreso != null && !llegada && rumbo.HasValue)
@@ -177,6 +208,7 @@ namespace Esan
             destino = lugar;
             ruta = null; progreso = null; llegada = false;
             Actualizar();
+            if (mapa.Abierto) ColocarMarcas();
         }
 
         void Mensaje(string texto, float segundos = 4)
@@ -186,32 +218,203 @@ namespace Esan
             ocultarMensaje = Time.unscaledTime + segundos;
         }
 
-        // El mapa web se abre dentro de la app, en una ventana de Android encima de la cámara (EsanMapaWeb.java).
+        // ---------- Mapa ----------
+
         void AbrirMapa()
         {
-#if UNITY_ANDROID && !UNITY_EDITOR
-            try
-            {
-                using (var unity = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
-                using (var actividad = unity.GetStatic<AndroidJavaObject>("currentActivity"))
-                using (var mapa = new AndroidJavaClass("pe.esan.mapa.EsanMapaWeb"))
-                    mapa.CallStatic("abrir", actividad, MapaWeb, DominioMapa, gameObject.name);
-                PausarCamara(true);
-                return;
-            }
-            catch (Exception error) { Debug.LogWarning("ESAN: no se pudo abrir el mapa dentro de la app: " + error.Message); }
-#endif
-            Application.OpenURL(MapaWeb);
+            if (!abriendoMapa && !mapa.Abierto) StartCoroutine(AbrirMapaConCarga());
         }
 
-        // Lo llama EsanMapaWeb.java al cerrarse la ventana del mapa.
-        public void MapaCerrado(string _) => PausarCamara(false);
+        // La primera vez el modelo tarda unos segundos: se muestra la carga con su progreso.
+        IEnumerator AbrirMapaConCarga()
+        {
+            abriendoMapa = true;
+            if (!mapa.Cargado)
+            {
+                textoCarga.text = "Cargando el mapa del campus…";
+                cargando.SetActive(true);
+                yield return null;
+                yield return mapa.Cargar(avance => textoCarga.text = "Cargando el mapa del campus… " + Mathf.RoundToInt(avance * 100) + " %");
+                cargando.SetActive(false);
+            }
+            abriendoMapa = false;
+            PausarCamara(true);
+            mapa.Abrir();
+            capaCamara.gameObject.SetActive(false);
+            capaMapa.gameObject.SetActive(true);
+            rutaMapaHasta = null;
+            PosicionarBanda(true);
+            ActualizarMapa();
+            ColocarMarcas();
+            Actualizar();
+        }
 
-        // Con el mapa encima no hace falta la cámara ni dibujar a todo ritmo.
+        void CerrarMapa()
+        {
+            mapa.Cerrar();
+            PausarCamara(false);
+            capaMapa.gameObject.SetActive(false);
+            capaCamara.gameObject.SetActive(true);
+            PosicionarBanda(false);
+            Actualizar();
+        }
+
+        // Con el mapa encima no hace falta la cámara de Vuforia.
         static void PausarCamara(bool pausar)
         {
             if (Vuforia.VuforiaBehaviour.Instance != null) Vuforia.VuforiaBehaviour.Instance.enabled = !pausar;
-            UnityEngine.Rendering.OnDemandRendering.renderFrameInterval = pausar ? 6 : 1;
+        }
+
+        // Tarjeta del evento y ruta dibujada sobre el campus.
+        void ActualizarMapa()
+        {
+            Ubicacion estado = gps.Estado;
+            botonEvento.transform.parent.gameObject.SetActive(lugares.Count > 1);
+            botonEvento.text = destino != null ? "Cambiar evento" : "Elegir evento";
+            textoPin.text = destino != null ? destino.Nombre : "";
+            if (destino == null)
+            {
+                mapaNombre.text = lugares.Count == 0 ? "No hay eventos por ahora" : "Elige un evento";
+                mapaLinea.text = lugares.Count == 0 ? "Pronto verás aquí cómo llegar" : "Toca «Elegir evento»";
+                rutaMapa = null; rutaMapaHasta = null;
+                mapa.MostrarRuta(null);
+                return;
+            }
+            mapaNombre.text = destino.Nombre;
+            string fecha = string.IsNullOrEmpty(destino.Fecha) ? "" : destino.Fecha + " · ";
+            if (!estado.HayLectura)
+            {
+                mapaLinea.text = fecha + (gps.PermisoNegado ? "Permite la ubicación para ver la ruta" : gps.Apagada ? "Activa la ubicación para ver la ruta" : "Buscando tu ubicación…");
+                mapa.MostrarRuta(null);
+                return;
+            }
+            // La ruta se recalcula al cambiar de destino o tras moverse unos metros.
+            if (rutaMapaHasta != destino || Geo.DistanciaMetros(rutaMapaDesde, estado.Coordenada) > 8)
+            {
+                rutaMapa = grafo.RutaMasCorta(estado.Coordenada, destino.Coordenada);
+                rutaMapaDesde = estado.Coordenada;
+                rutaMapaHasta = destino;
+                if (rutaMapa == null) mapa.MostrarRuta(null);
+                else mapa.MostrarRuta(new List<Coord>(rutaMapa.Puntos) { destino.Coordenada });
+            }
+            if (rutaMapa == null) { mapaLinea.text = fecha + "Sin ruta peatonal disponible"; return; }
+            double metros = Geo.DistanciaMetros(estado.Coordenada, rutaMapa.Puntos[0]) + rutaMapa.Metros + Geo.DistanciaMetros(rutaMapa.Puntos[rutaMapa.Puntos.Count - 1], destino.Coordenada);
+            mapaLinea.text = fecha + Navegacion.TextoDistancia(metros) + " · " + Navegacion.TiempoAPie(metros);
+        }
+
+        // El pin del evento y el punto azul del usuario siguen al modelo mientras se mueve la vista.
+        void ColocarMarcas()
+        {
+            puntoUsuario.gameObject.SetActive(gps.Estado.HayLectura && Colocar(puntoUsuario, gps.Estado.Coordenada));
+            pinEvento.gameObject.SetActive(destino != null && Colocar(pinEvento, destino.Coordenada));
+        }
+
+        bool Colocar(RectTransform marca, Coord punto)
+        {
+            if (!mapa.Proyectar(punto, out Vector2 pantalla)) return false;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(capaMapa, pantalla, null, out Vector2 local);
+            marca.localPosition = local;
+            return true;
+        }
+
+        void CambiarPlano(bool plano)
+        {
+            mapa.CambiarPlano(plano);
+            fondo3D.color = plano ? Gris : Tinta;
+            rotulo3D.color = plano ? Tinta : Color.white;
+            fondoPlano.color = plano ? Tinta : Gris;
+            rotuloPlano.color = plano ? Color.white : Tinta;
+        }
+
+        void IrAMiUbicacion()
+        {
+            if (gps.Estado.HayLectura) { mapa.Enfocar(gps.Estado.Coordenada); Mensaje("Centrado en tu ubicación", 2); }
+            else if (gps.PermisoNegado) gps.PedirPermiso();
+            else if (gps.Apagada) EsanUbicacion.AbrirAjustesDeUbicacion();
+            else Mensaje("Todavía buscamos tu ubicación. Al aire libre se encuentra antes.");
+        }
+
+        // ---------- Avisos ----------
+
+        // Un solo aviso a la vez, el más importante, con la acción que lo resuelve.
+        void ActualizarBanda(Ubicacion estado, Guia situacion)
+        {
+            string clave = null, texto = null, accion = null;
+            Action alPulsar = null;
+            if (gps.PermisoNegado)
+            {
+                clave = "permiso"; accion = "Permitir"; alPulsar = gps.PedirPermiso;
+                texto = "Necesitamos tu ubicación para guiarte hasta el evento.";
+            }
+            else if (gps.Apagada)
+            {
+                clave = "apagada"; accion = "Activar"; alPulsar = EsanUbicacion.AbrirAjustesDeUbicacion;
+                texto = "La ubicación del celular está apagada. Actívala para ver dónde estás y la ruta.";
+            }
+            else if (!mapa.Abierto && EsanMarcadores.SinPermisoCamara)
+            {
+                clave = "cámara"; accion = "Permitir"; alPulsar = EsanUbicacion.AbrirAjustesDeApp;
+                texto = "Sin permiso de cámara no podemos mostrar la guía. Mientras tanto puedes usar el mapa.";
+            }
+            else if (!mapa.Abierto && EsanMarcadores.VuforiaFallo)
+            {
+                clave = "sin cámara"; accion = "Ver mapa"; alPulsar = AbrirMapa;
+                texto = "No se pudo abrir la cámara. Usa el mapa para llegar al evento.";
+            }
+            else if (estado.HayLectura && !estado.Caducada && estado.Precision > PrecisionMaxima)
+            {
+                clave = "señal";
+                texto = "Señal GPS débil (±" + Mathf.RoundToInt((float)estado.Precision) + " m). Sal a un espacio abierto para mejorarla.";
+            }
+            else if (estado.Caducada)
+            {
+                clave = "sin actualizar";
+                texto = "Hace un rato que no recibimos tu ubicación. Al aire libre se recupera antes.";
+            }
+            else if (situacion == Guia.FueraDelCampus)
+            {
+                clave = "fuera";
+                texto = "Estás fuera del campus. Las indicaciones empiezan al entrar.";
+                if (!mapa.Abierto) { accion = "Ver mapa"; alPulsar = AbrirMapa; }
+            }
+            // Lo que se cerró vuelve a aparecer solo si cambia la situación.
+            if (clave != bandaDescartada) bandaDescartada = null;
+            bool ver = clave != null && clave != bandaDescartada;
+            banda.SetActive(ver);
+            bandaVisible = clave;
+            if (!ver) return;
+            textoBanda.text = texto;
+            accionBanda.transform.parent.gameObject.SetActive(accion != null);
+            accionBanda.text = accion ?? "";
+            alPulsarBanda = alPulsar;
+        }
+
+        void PosicionarBanda(bool enMapa)
+        {
+            var rect = (RectTransform)banda.transform;
+            rect.anchoredPosition = new Vector2(0, enMapa ? -178 : -114);
+        }
+
+        void ConfirmarSalida() => Dialogo("¿Salir de la app?", "Dejarás de ver la guía hacia el evento.",
+            ("Cancelar", Gris, Tinta, null), ("Salir", Rojo, Color.white, Application.Quit));
+
+        void Ayuda() => Dialogo("Cómo llegar al evento",
+            "<b>Con la cámara</b>\nApunta al suelo y sigue la línea azul. La tarjeta de abajo te dice hacia dónde girar y cuánto falta.\n\n" +
+            "<b>Con el mapa</b>\nUn dedo gira la vista; dos dedos la mueven y acercan, y dos toques seguidos acercan. El pin rojo es el evento y el punto azul eres tú.\n\n" +
+            "<b>Si la guía no aparece</b>\nActiva la ubicación, camina unos pasos para orientar la brújula y, si puedes, sal a un espacio abierto.",
+            ("Entendido", Tinta, Color.white, null));
+
+        void Dialogo(string titulo, string texto, params (string rotulo, Color fondo, Color color, Action alPulsar)[] acciones)
+        {
+            tituloDialogo.text = titulo;
+            textoDialogo.text = texto;
+            for (int i = accionesDialogo.childCount - 1; i >= 0; i--) Destroy(accionesDialogo.GetChild(i).gameObject);
+            foreach (var accion in acciones)
+            {
+                Action alPulsar = accion.alPulsar;
+                Boton(accionesDialogo, accion.rotulo, accion.fondo, accion.color, () => { dialogo.SetActive(false); alPulsar?.Invoke(); });
+            }
+            dialogo.SetActive(true);
         }
 
         void AbrirSelector()
@@ -227,6 +430,11 @@ namespace Esan
             var orden = new List<Lugar>(lugares);
             if (conDistancia) orden.Sort((a, b) => Geo.DistanciaMetros(gps.Estado.Coordenada, a.Coordenada).CompareTo(Geo.DistanciaMetros(gps.Estado.Coordenada, b.Coordenada)));
             else orden.Sort((a, b) => string.Compare(a.Nombre, b.Nombre, StringComparison.CurrentCultureIgnoreCase));
+            if (orden.Count == 0)
+            {
+                Text vacio = Escribir(listaLugares, "No hay eventos por ahora", 14, FontStyle.Normal, Apagado);
+                vacio.gameObject.AddComponent<LayoutElement>().minHeight = 50;
+            }
             foreach (Lugar lugar in orden)
             {
                 bool elegido = lugar == destino;
@@ -236,7 +444,8 @@ namespace Esan
                 fila.gameObject.AddComponent<LayoutElement>().minHeight = 50;
                 fila.gameObject.AddComponent<Button>().onClick.AddListener(() => Elegir(este));
                 Escribir(fila.transform, lugar.Nombre, 14, FontStyle.Bold, elegido ? Granate : Tinta);
-                Escribir(fila.transform, conDistancia ? Navegacion.TextoDistancia(Geo.DistanciaMetros(gps.Estado.Coordenada, lugar.Coordenada)) + " en línea recta" : "Distancia por confirmar", 12, FontStyle.Normal, elegido ? Granate : Apagado);
+                string distancia = conDistancia ? Navegacion.TextoDistancia(Geo.DistanciaMetros(gps.Estado.Coordenada, lugar.Coordenada)) + " en línea recta" : "Distancia por confirmar";
+                Escribir(fila.transform, lugar.Fecha.Length > 0 ? lugar.Fecha + " · " + distancia : distancia, 12, FontStyle.Normal, elegido ? Granate : Apagado);
             }
         }
 
@@ -267,8 +476,9 @@ namespace Esan
             Text marca = Escribir(logo.transform, "esan", 18, FontStyle.Bold, Color.white, TextAnchor.MiddleCenter);
             Estirar(marca.rectTransform);
             Text titulo = Escribir(barra.transform, "Explora el campus", 16, FontStyle.Bold, Tinta, TextAnchor.MiddleLeft);
-            Anclar(titulo.rectTransform, 0, 0, 1, 1, 80, 0, -50, 0);
-            BotonIcono(barra.transform, "Cerrar", EsanDibujo.Cerrar, Tinta, Application.Quit, 1, .5f, -50, -22, -6, 22);
+            Anclar(titulo.rectTransform, 0, 0, 1, 1, 80, 0, -94, 0);
+            BotonIcono(barra.transform, "Ayuda", EsanDibujo.Ayuda, Tinta, Ayuda, 1, .5f, -94, -22, -50, 22);
+            BotonIcono(barra.transform, "Cerrar", EsanDibujo.Cerrar, Tinta, ConfirmarSalida, 1, .5f, -50, -22, -6, 22);
 
             // Estado
             RectTransform chips = Nodo("Estado", raiz);
@@ -279,8 +489,9 @@ namespace Esan
 
             // Aviso temporal
             Image aviso = Caja("Aviso", raiz, Tinta, 12);
-            aviso.rectTransform.pivot = new Vector2(.5f, 1);
-            Anclar(aviso.rectTransform, 0, 1, 1, 1, 16, -160, -16, -116);
+            aviso.rectTransform.pivot = new Vector2(.5f, 0);
+            aviso.raycastTarget = false;
+            Anclar(aviso.rectTransform, 0, .3f, 1, .3f, 16, 0, -16, 44);
             Vertical(aviso.gameObject, 14, 14, 12, 12, 0);
             aviso.gameObject.AddComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
             mensaje = Escribir(aviso.transform, "", 14, FontStyle.Normal, Color.white, TextAnchor.MiddleCenter);
@@ -310,7 +521,7 @@ namespace Esan
             tarjeta.gameObject.AddComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
             RectTransform cabecera = Nodo("Destino", tarjeta.transform);
             Vertical(cabecera.gameObject, 0, 0, 0, 0, 2);
-            etiqueta = Escribir(cabecera, "TU DESTINO", 12, FontStyle.Bold, Apagado);
+            etiqueta = Escribir(cabecera, "TU EVENTO", 12, FontStyle.Bold, Apagado);
             nombre = Escribir(cabecera, "", 20, FontStyle.Bold, Tinta);
             linea = Escribir(cabecera, "", 13, FontStyle.Normal, Apagado);
 
@@ -330,13 +541,22 @@ namespace Esan
             RectTransform acciones = Nodo("Acciones", tarjeta.transform);
             var fila = Horizontal(acciones.gameObject, 0, 0, 0, 0, 8, TextAnchor.MiddleCenter);
             fila.childForceExpandWidth = true;
-            botonElegir = Boton(acciones, "Elegir destino", Gris, Tinta, AbrirSelector);
-            Boton(acciones, "Volver al mapa", Tinta, Color.white, AbrirMapa);
+            botonElegir = Boton(acciones, "Elegir evento", Gris, Tinta, AbrirSelector);
+            Boton(acciones, "Ver mapa", Tinta, Color.white, AbrirMapa);
 
-            // Lista de lugares
-            Image hoja = Caja("Lugares", raiz, Color.white, 18);
+            // Todo lo de la cámara queda en una capa que se oculta con el mapa abierto.
+            capaCamara = Nodo("Cámara", raiz);
+            Estirar(capaCamara);
+            while (raiz.childCount > 1) raiz.GetChild(0).SetParent(capaCamara, false);
+            ConstruirMapa();
+            // El aviso temporal y la banda quedan por encima de las dos vistas.
+            aviso.transform.SetParent(raiz, false);
+            ConstruirBanda();
+
+            // Lista de eventos
+            Image hoja = Caja("Eventos", raiz, Color.white, 18);
             Anclar(hoja.rectTransform, 0, 0, 1, .7f, 0, 0, 0, 0);
-            Text encabezado = Escribir(hoja.transform, "Elige un destino", 16, FontStyle.Bold, Tinta, TextAnchor.MiddleLeft);
+            Text encabezado = Escribir(hoja.transform, "Eventos", 16, FontStyle.Bold, Tinta, TextAnchor.MiddleLeft);
             Anclar(encabezado.rectTransform, 0, 1, 1, 1, 16, -56, -60, -12);
             BotonIcono(hoja.transform, "Cerrar lista", EsanDibujo.Cerrar, Tinta, () => selector.SetActive(false), 1, 1, -56, -56, -12, -12);
             RectTransform zona = Nodo("Desplazable", hoja.transform);
@@ -355,6 +575,168 @@ namespace Esan
             desplazar.scrollSensitivity = 30;
             selector = hoja.gameObject;
             selector.SetActive(false);
+
+            ConstruirDialogo();
+            ConstruirCarga();
+        }
+
+        // Banda de aviso con acción, debajo de la cabecera.
+        void ConstruirBanda()
+        {
+            Image caja = Caja("Banda", raiz, Hex("fff4d6"), 12);
+            caja.rectTransform.pivot = new Vector2(.5f, 1);
+            Anclar(caja.rectTransform, 0, 1, 1, 1, 10, -114, -10, -114);
+            Horizontal(caja.gameObject, 12, 4, 8, 8, 8, TextAnchor.MiddleLeft);
+            caja.gameObject.AddComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+            textoBanda = Escribir(caja.transform, "", 13, FontStyle.Normal, Hex("5c4300"), TextAnchor.MiddleLeft);
+            textoBanda.gameObject.AddComponent<LayoutElement>().flexibleWidth = 1;
+            accionBanda = Boton(caja.transform, "", Ambar, Color.white, () => alPulsarBanda?.Invoke());
+            var medida = accionBanda.transform.parent.GetComponent<LayoutElement>();
+            medida.flexibleWidth = 0; medida.preferredWidth = 88; medida.preferredHeight = 36;
+            Image cerrar = Nodo("Cerrar aviso", caja.transform).gameObject.AddComponent<Image>();
+            cerrar.color = Color.clear;
+            var lado = cerrar.gameObject.AddComponent<LayoutElement>();
+            lado.preferredWidth = lado.preferredHeight = 36;
+            cerrar.gameObject.AddComponent<Button>().onClick.AddListener(() => { bandaDescartada = bandaVisible; banda.SetActive(false); });
+            Image equis = Nodo("Icono", cerrar.transform).gameObject.AddComponent<Image>();
+            equis.sprite = EsanDibujo.Icono("Cerrar", EsanDibujo.Cerrar);
+            equis.color = Hex("5c4300");
+            equis.raycastTarget = false;
+            Anclar(equis.rectTransform, .5f, .5f, .5f, .5f, -9, -9, 9, 9);
+            banda = caja.gameObject;
+            banda.SetActive(false);
+        }
+
+        // Diálogo modal: salir, ayuda. Cubre toda la pantalla, también fuera del área segura.
+        void ConstruirDialogo()
+        {
+            Image velo = Nodo("Diálogo", transform).gameObject.AddComponent<Image>();
+            velo.color = new Color(0, 0, 0, .45f);
+            Estirar(velo.rectTransform);
+            Image caja = Caja("Caja", velo.transform, Color.white, 18);
+            caja.rectTransform.pivot = new Vector2(.5f, .5f);
+            Anclar(caja.rectTransform, 0, .5f, 1, .5f, 24, 0, -24, 0);
+            Vertical(caja.gameObject, 20, 20, 20, 16, 12);
+            caja.gameObject.AddComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+            tituloDialogo = Escribir(caja.transform, "", 18, FontStyle.Bold, Tinta);
+            textoDialogo = Escribir(caja.transform, "", 14, FontStyle.Normal, Apagado);
+            textoDialogo.supportRichText = true;
+            accionesDialogo = Nodo("Acciones", caja.transform);
+            Horizontal(accionesDialogo.gameObject, 0, 0, 6, 0, 8, TextAnchor.MiddleCenter).childForceExpandWidth = true;
+            dialogo = velo.gameObject;
+            dialogo.SetActive(false);
+        }
+
+        // Pantalla de carga del mapa: tapa la cámara y bloquea los toques mientras dura.
+        void ConstruirCarga()
+        {
+            Image fondo = Nodo("Cargando", transform).gameObject.AddComponent<Image>();
+            fondo.color = Hex("dbe3de");
+            Estirar(fondo.rectTransform);
+            Image giro = Nodo("Giro", fondo.transform).gameObject.AddComponent<Image>();
+            giro.sprite = EsanDibujo.Icono("carga", EsanDibujo.Carga, 2.8f);
+            giro.color = Tinta;
+            giro.raycastTarget = false;
+            Anclar(giro.rectTransform, .5f, .5f, .5f, .5f, -24, 8, 24, 56);
+            giroCarga = giro.rectTransform;
+            textoCarga = Escribir(fondo.transform, "", 15, FontStyle.Bold, Tinta, TextAnchor.UpperCenter);
+            Anclar(textoCarga.rectTransform, 0, .5f, 1, .5f, 24, -40, -24, -8);
+            cargando = fondo.gameObject;
+            cargando.SetActive(false);
+        }
+
+        void ConstruirMapa()
+        {
+            capaMapa = Nodo("Mapa", raiz);
+            Estirar(capaMapa);
+
+            // Marcas, debajo de los controles. Sin raycast para no robar los gestos del mapa.
+            puntoUsuario = Nodo("Tú", capaMapa);
+            puntoUsuario.sizeDelta = new Vector2(22, 22);
+            Image borde = Circulo(puntoUsuario, Color.white, 22);
+            Circulo(borde.transform, AzulUsuario, 14);
+            pinEvento = Nodo("Evento", capaMapa);
+            pinEvento.sizeDelta = new Vector2(0, 0);
+            Image cabeza = Circulo(pinEvento, Color.white, 26);
+            cabeza.rectTransform.anchoredPosition = new Vector2(0, 13);
+            Circulo(cabeza.transform, Granate, 18);
+            Image etiquetaPin = Caja("Nombre", pinEvento, Granate, 10);
+            etiquetaPin.raycastTarget = false;
+            etiquetaPin.rectTransform.pivot = new Vector2(.5f, 0);
+            etiquetaPin.rectTransform.anchoredPosition = new Vector2(0, 30);
+            Horizontal(etiquetaPin.gameObject, 10, 10, 5, 5, 0, TextAnchor.MiddleCenter);
+            var ajuste = etiquetaPin.gameObject.AddComponent<ContentSizeFitter>();
+            ajuste.horizontalFit = ajuste.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+            textoPin = Escribir(etiquetaPin.transform, "", 13, FontStyle.Bold, Color.white, TextAnchor.MiddleCenter);
+            textoPin.horizontalOverflow = HorizontalWrapMode.Overflow;
+
+            // Barra para volver, como la de la ventana del mapa web.
+            Image volver = Caja("Volver a la cámara", capaMapa, Tinta, 1);
+            Anclar(volver.rectTransform, 0, 1, 1, 1, 0, -48, 0, 0);
+            volver.gameObject.AddComponent<Button>().onClick.AddListener(CerrarMapa);
+            Image atras = Nodo("Icono", volver.transform).gameObject.AddComponent<Image>();
+            atras.sprite = EsanDibujo.Icono("atras", EsanDibujo.Atras);
+            atras.raycastTarget = false;
+            Anclar(atras.rectTransform, 0, .5f, 0, .5f, 12, -11, 34, 11);
+            Text rotuloVolver = Escribir(volver.transform, "Volver a la cámara", 16, FontStyle.Bold, Color.white, TextAnchor.MiddleLeft);
+            Anclar(rotuloVolver.rectTransform, 0, 0, 1, 1, 42, 0, -10, 0);
+
+            // Cabecera
+            Image cabecera = Caja("Cabecera", capaMapa, Panel, 14);
+            Anclar(cabecera.rectTransform, 0, 1, 1, 1, 10, -114, -10, -58);
+            Image logo = Caja("Logo", cabecera.transform, Rojo, 6);
+            Anclar(logo.rectTransform, 0, .5f, 0, .5f, 10, -15, 68, 15);
+            Estirar(Escribir(logo.transform, "esan", 18, FontStyle.Bold, Color.white, TextAnchor.MiddleCenter).rectTransform);
+            Text titulo = Escribir(cabecera.transform, "Mapa del campus", 16, FontStyle.Bold, Tinta, TextAnchor.MiddleLeft);
+            Anclar(titulo.rectTransform, 0, 0, 1, 1, 80, 0, -94, 0);
+            BotonIcono(cabecera.transform, "Ayuda", EsanDibujo.Ayuda, Tinta, Ayuda, 1, .5f, -94, -22, -50, 22);
+            BotonIcono(cabecera.transform, "Mi ubicación", EsanDibujo.Ubicar, Tinta, IrAMiUbicacion, 1, .5f, -50, -22, -6, 22);
+
+            // 3D o plano, y vista general
+            Image selectorVista = Caja("Vista", capaMapa, Panel, 14);
+            Anclar(selectorVista.rectTransform, 1, 1, 1, 1, -186, -170, -62, -124);
+            Horizontal(selectorVista.gameObject, 4, 4, 4, 4, 4, TextAnchor.MiddleCenter).childForceExpandWidth = true;
+            rotulo3D = Boton(selectorVista.transform, "3D", Tinta, Color.white, () => CambiarPlano(false));
+            fondo3D = rotulo3D.transform.parent.GetComponent<Image>();
+            rotuloPlano = Boton(selectorVista.transform, "Plano", Gris, Tinta, () => CambiarPlano(true));
+            fondoPlano = rotuloPlano.transform.parent.GetComponent<Image>();
+            Image general = Caja("Vista general", capaMapa, Panel, 14);
+            Anclar(general.rectTransform, 1, 1, 1, 1, -56, -170, -10, -124);
+            BotonIcono(general.transform, "Vista general", EsanDibujo.Encuadre, Tinta, () => { mapa.VistaGeneral(); Mensaje("Vista de todo el campus", 2); }, .5f, .5f, -23, -23, 23, 23);
+
+            // Zoom
+            Image zoom = Caja("Zoom", capaMapa, Panel, 14);
+            Anclar(zoom.rectTransform, 1, .5f, 1, .5f, -56, -46, -10, 46);
+            BotonIcono(zoom.transform, "Acercar", EsanDibujo.Mas, Tinta, () => mapa.Acercar(.7f), .5f, 1, -23, -46, 23, 0);
+            BotonIcono(zoom.transform, "Alejar", EsanDibujo.Menos, Tinta, () => mapa.Acercar(1 / .7f), .5f, 0, -23, 0, 23, 46);
+
+            // Tarjeta del evento
+            Image tarjeta = Caja("Tarjeta del evento", capaMapa, new Color(1, 1, 1, .96f), 16);
+            tarjeta.rectTransform.pivot = new Vector2(.5f, 0);
+            Anclar(tarjeta.rectTransform, 0, 0, 1, 0, 10, 10, -10, 110);
+            Vertical(tarjeta.gameObject, 14, 14, 12, 12, 10);
+            tarjeta.gameObject.AddComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+            RectTransform datos = Nodo("Datos", tarjeta.transform);
+            Vertical(datos.gameObject, 0, 0, 0, 0, 2);
+            Escribir(datos, "EVENTO", 12, FontStyle.Bold, Apagado);
+            mapaNombre = Escribir(datos, "", 20, FontStyle.Bold, Tinta);
+            mapaLinea = Escribir(datos, "", 13, FontStyle.Normal, Apagado);
+            RectTransform acciones = Nodo("Acciones", tarjeta.transform);
+            Horizontal(acciones.gameObject, 0, 0, 0, 0, 8, TextAnchor.MiddleCenter).childForceExpandWidth = true;
+            botonEvento = Boton(acciones, "Elegir evento", Gris, Tinta, AbrirSelector);
+            Boton(acciones, "Ir con la cámara", Tinta, Color.white, CerrarMapa);
+
+            capaMapa.gameObject.SetActive(false);
+        }
+
+        static Image Circulo(Transform padre, Color color, float diametro)
+        {
+            var imagen = Nodo("Círculo", padre).gameObject.AddComponent<Image>();
+            imagen.sprite = EsanDibujo.Redondeado(12);
+            imagen.color = color;
+            imagen.raycastTarget = false;
+            imagen.rectTransform.sizeDelta = new Vector2(diametro, diametro);
+            return imagen;
         }
 
         void AjustarAreaSegura()

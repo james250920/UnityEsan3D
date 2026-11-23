@@ -116,6 +116,19 @@ static class Pruebas
             Mismo(guia, paso.GetProperty("guidance").GetString(), "guía de ubicación");
             Mismo(zona, paso.GetProperty("zone").GetString(), "zona");
         }
+        // Calibración del modelo 3D: el punto de prueba de esan-godot cae en (418.260695554, 731.012825536) del plano.
+        using (var calibracionJson = JsonDocument.Parse(File.ReadAllText(Path.Combine(datos, "calibracion.json"))))
+        {
+            var raiz = calibracionJson.RootElement;
+            var calibracion = new Calibracion { Origen = C(raiz.GetProperty("origin")), Anclaje = C(raiz.GetProperty("anchor")) };
+            foreach (var p in raiz.GetProperty("base").EnumerateArray()) calibracion.Base.Add(new[] { p[0].GetDouble(), p[1].GetDouble() });
+            foreach (var p in raiz.GetProperty("target").EnumerateArray()) calibracion.Destino.Add(new[] { p[0].GetDouble(), p[1].GetDouble() });
+            foreach (var t in raiz.GetProperty("triangles").EnumerateArray()) calibracion.Triangulos.Add(new[] { t[0].GetInt32(), t[1].GetInt32(), t[2].GetInt32() });
+            double[] plano = calibracion.APlano(new Coord(-76.9614711, -12.1053539));
+            Igual(plano[0], 418.260695554, "calibración x", 1e-6);
+            Igual(plano[1], 731.012825536, "calibración z", 1e-6);
+        }
+
         Console.WriteLine(fallos == 0 ? $"OK: {comprobaciones} comprobaciones coinciden con el mapa web ({grafo.Nodos} puntos, {grafo.Uniones} uniones)." : $"{fallos} FALLOS de {comprobaciones} comprobaciones.");
         return fallos == 0 ? 0 : 1;
     }

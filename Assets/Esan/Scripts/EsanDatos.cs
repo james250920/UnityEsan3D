@@ -6,11 +6,12 @@ using UnityEngine;
 
 namespace Esan
 {
+    /// <summary>Destino de la lista: un evento en un punto del campus.</summary>
     public sealed class Lugar
     {
         public string Nombre;
+        public string Fecha;
         public Coord Coordenada;
-        public List<string> Aulas = new List<string>();
     }
 
     public static class EsanDatos
@@ -31,27 +32,29 @@ namespace Esan
             return perimetro;
         }
 
-        /// <summary>Lugares con nombre y coordenadas: los únicos que pueden ser destino.</summary>
-        public static List<Lugar> CargarLugares()
+        /// <summary>Eventos de Resources/Datos/eventos.json: los únicos destinos de la lista.</summary>
+        public static List<Lugar> CargarEventos()
         {
-            var lugares = new List<Lugar>();
-            foreach (JToken elemento in Leer("nombres-elementos")["elementos"])
+            var eventos = new List<Lugar>();
+            foreach (JToken evento in Leer("eventos")["eventos"])
             {
-                string nombre = ((string)elemento["sobrenombre"] ?? "").Trim();
-                JToken coordenadas = elemento["coordenadas"];
+                string nombre = ((string)evento["nombre"] ?? "").Trim();
+                JToken coordenadas = evento["coordenadas"];
                 if (nombre.Length == 0 || coordenadas == null || coordenadas.Type != JTokenType.Array) continue;
-                var lugar = new Lugar { Nombre = nombre, Coordenada = Coordenada(coordenadas) };
-                if (elemento["aulas"] is JArray aulas)
-                    foreach (JToken aula in aulas)
-                    {
-                        string texto = ((string)aula ?? "").Trim();
-                        if (texto.Length > 0 && !lugar.Aulas.Contains(texto)) lugar.Aulas.Add(texto);
-                    }
-                // Un nombre repetido se queda con su último punto, como en el mapa web.
-                lugares.RemoveAll(otro => otro.Nombre == nombre);
-                lugares.Add(lugar);
+                eventos.Add(new Lugar { Nombre = nombre, Fecha = ((string)evento["fecha"] ?? "").Trim(), Coordenada = Coordenada(coordenadas) });
             }
-            return lugares;
+            return eventos;
+        }
+
+        /// <summary>Encaje del modelo 3D del campus con las coordenadas geográficas.</summary>
+        public static Calibracion CargarCalibracion()
+        {
+            JObject json = Leer("calibracion");
+            var calibracion = new Calibracion { Origen = Coordenada(json["origin"]), Anclaje = Coordenada(json["anchor"]) };
+            foreach (JToken punto in json["base"]) calibracion.Base.Add(new[] { (double)punto[0], (double)punto[1] });
+            foreach (JToken punto in json["target"]) calibracion.Destino.Add(new[] { (double)punto[0], (double)punto[1] });
+            foreach (JToken cara in json["triangles"]) calibracion.Triangulos.Add(new[] { (int)cara[0], (int)cara[1], (int)cara[2] });
+            return calibracion;
         }
 
         static Coord Coordenada(JToken par) => new Coord((double)par[0], (double)par[1]);

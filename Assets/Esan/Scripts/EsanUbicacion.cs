@@ -20,7 +20,8 @@ namespace Esan
         readonly RumboAlCaminar caminar = new RumboAlCaminar();
         double ultimaMarca = -1, rumboSimulado = double.NaN;
         Coord puntoSimulado;
-        float proximaSimulada;
+        float proximaSimulada, proximaRevision;
+        bool encendida;
 
         static double AhoraMs => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
 
@@ -54,6 +55,11 @@ namespace Esan
                 Cambio?.Invoke();
                 yield break;
             }
+            yield return Encender();
+        }
+
+        IEnumerator Encender()
+        {
             // Si la ubicación del celular está apagada, se espera a que la enciendan.
             while (!Input.location.isEnabledByUser)
             {
@@ -62,6 +68,23 @@ namespace Esan
             }
             Apagada = false;
             Input.location.Start(5f, 1f);
+            encendida = true;
+        }
+
+        // La ubicación también se puede apagar con la app abierta: se revisa cada poco y se reanuda al encenderla.
+        void RevisarSiEstaApagada()
+        {
+            if (!encendida || Time.unscaledTime < proximaRevision) return;
+            proximaRevision = Time.unscaledTime + 2;
+            bool apagada = !Input.location.isEnabledByUser;
+            if (apagada == Apagada) return;
+            Apagada = apagada;
+            if (!apagada)
+            {
+                Input.location.Stop();
+                Input.location.Start(5f, 1f);
+            }
+            Cambio?.Invoke();
         }
 
         void Update()
@@ -75,6 +98,7 @@ namespace Esan
                 Cambio?.Invoke();
                 return;
             }
+            RevisarSiEstaApagada();
             if (Input.location.status != LocationServiceStatus.Running) return;
             LocationInfo dato = Input.location.lastData;
             if (dato.timestamp == ultimaMarca) return;
@@ -83,6 +107,61 @@ namespace Esan
             Estado.Lectura(punto, dato.horizontalAccuracy, dato.timestamp * 1000, AhoraMs);
             caminar.Actualizar(punto, dato.horizontalAccuracy);
             Cambio?.Invoke();
+        }
+
+        /// <summary>Vuelve a pedir el permiso; si Android ya no muestra el aviso, abre los ajustes de la app.</summary>
+        public void PedirPermiso()
+        {
+#if UNITY_ANDROID && !UNITY_EDITOR
+            if (!Permission.ShouldShowRequestPermissionRationale(Permission.FineLocation))
+            {
+                AbrirAjustesDeApp();
+                return;
+            }
+            var respuestas = new PermissionCallbacks();
+            respuestas.PermissionGranted += _ => Concedido();
+            Permission.RequestUserPermission(Permission.FineLocation, respuestas);
+#endif
+        }
+
+        // Al volver de los ajustes de Android, se comprueba si ya dieron el permiso.
+        void OnApplicationFocus(bool foco)
+        {
+#if UNITY_ANDROID && !UNITY_EDITOR
+            if (foco && PermisoNegado && Permission.HasUserAuthorizedPermission(Permission.FineLocation)) Concedido();
+#endif
+        }
+
+        void Concedido()
+        {
+            if (!PermisoNegado) return;
+            PermisoNegado = false;
+            Cambio?.Invoke();
+            StartCoroutine(Encender());
+        }
+
+        public static void AbrirAjustesDeUbicacion() => AbrirAjustes("android.settings.LOCATION_SOURCE_SETTINGS", false);
+
+        public static void AbrirAjustesDeApp() => AbrirAjustes("android.settings.APPLICATION_DETAILS_SETTINGS", true);
+
+        static void AbrirAjustes(string accion, bool deLaApp)
+        {
+#if UNITY_ANDROID && !UNITY_EDITOR
+            try
+            {
+                using (var unity = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+                using (var actividad = unity.GetStatic<AndroidJavaObject>("currentActivity"))
+                using (var intencion = new AndroidJavaObject("android.content.Intent", accion))
+                {
+                    if (deLaApp)
+                        using (var uri = new AndroidJavaClass("android.net.Uri"))
+                        using (var paquete = uri.CallStatic<AndroidJavaObject>("fromParts", "package", Application.identifier, null))
+                            intencion.Call<AndroidJavaObject>("setData", paquete);
+                    actividad.Call("startActivity", intencion);
+                }
+            }
+            catch (Exception error) { Debug.LogWarning("ESAN: no se pudieron abrir los ajustes: " + error.Message); }
+#endif
         }
 
         void OnDestroy()

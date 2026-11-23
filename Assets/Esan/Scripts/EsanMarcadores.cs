@@ -28,6 +28,7 @@ namespace Esan
         // La interfaz (EsanInterfaz) lee este estado y avisa cuando se reconoce un marcador.
         public static bool VuforiaListo { get; private set; }
         public static bool VuforiaFallo { get; private set; }
+        public static bool SinPermisoCamara { get; private set; }
         public static string Estado { get; private set; } = "Iniciando Vuforia…";
         public static event Action<string> Reconocido;
 
@@ -43,7 +44,7 @@ namespace Esan
 
         void Start()
         {
-            VuforiaListo = VuforiaFallo = false;
+            VuforiaListo = VuforiaFallo = SinPermisoCamara = false;
             if (VuforiaBehaviour.Instance == null)
             {
                 VuforiaFallo = true;
@@ -65,6 +66,7 @@ namespace Esan
         {
             if (error == VuforiaInitError.NONE) return;
             VuforiaFallo = true;
+            SinPermisoCamara = error == VuforiaInitError.PERMISSION_ERROR;
             estado = "Vuforia no pudo iniciar: " + error;
         }
 

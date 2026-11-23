@@ -13,7 +13,27 @@ namespace Esan
         // Trazos en una cuadrícula de 24, con el origen arriba a la izquierda como en los SVG de la web.
         public static readonly float[] Flecha = { 12, 20, 12, 4, 6, 10, 12, 4, 12, 4, 18, 10 };
         public static readonly float[] Cerrar = { 6, 6, 18, 18, 18, 6, 6, 18 };
+        public static readonly float[] Atras = { 15, 5, 8, 12, 8, 12, 15, 19 };
+        public static readonly float[] Mas = { 12, 5, 12, 19, 5, 12, 19, 12 };
+        public static readonly float[] Menos = { 5, 12, 19, 12 };
+        public static readonly float[] Encuadre = { 4, 9, 4, 4, 4, 4, 9, 4, 15, 4, 20, 4, 20, 4, 20, 9, 20, 15, 20, 20, 20, 20, 15, 20, 9, 20, 4, 20, 4, 20, 4, 15 };
+        public static readonly float[] Ubicar = { 12, 2, 12, 6, 12, 18, 12, 22, 2, 12, 6, 12, 18, 12, 22, 12, 12, 7, 15.5f, 8.5f, 15.5f, 8.5f, 17, 12, 17, 12, 15.5f, 15.5f, 15.5f, 15.5f, 12, 17, 12, 17, 8.5f, 15.5f, 8.5f, 15.5f, 7, 12, 7, 12, 8.5f, 8.5f, 8.5f, 8.5f, 12, 7 };
+        public static readonly float[] Ayuda = { 9, 9, 9.6f, 6.6f, 9.6f, 6.6f, 12, 5.5f, 12, 5.5f, 14.4f, 6.4f, 14.4f, 6.4f, 15, 8.6f, 15, 8.6f, 13.6f, 10.6f, 13.6f, 10.6f, 12, 12, 12, 12, 12, 14, 12, 18.4f, 12, 18.6f };
+        public static readonly float[] Carga = Arco(9, 0, 270, 18);
         public static readonly float[] Visto = { 5, 12.5f, 9.5f, 17, 9.5f, 17, 19, 7.5f };
+
+        // Arco de circunferencia en segmentos, centrado en la cuadrícula de 24.
+        static float[] Arco(float radio, float desde, float hasta, int tramos)
+        {
+            var trazos = new float[tramos * 4];
+            for (int i = 0; i < tramos; i++)
+            {
+                float a = (desde + (hasta - desde) * i / tramos) * Mathf.Deg2Rad, b = (desde + (hasta - desde) * (i + 1) / tramos) * Mathf.Deg2Rad;
+                trazos[i * 4] = 12 + radio * Mathf.Cos(a); trazos[i * 4 + 1] = 12 + radio * Mathf.Sin(a);
+                trazos[i * 4 + 2] = 12 + radio * Mathf.Cos(b); trazos[i * 4 + 3] = 12 + radio * Mathf.Sin(b);
+            }
+            return trazos;
+        }
 
         /// <summary>Rectángulo blanco de esquinas redondeadas, para Image.Type.Sliced.</summary>
         public static Sprite Redondeado(int radio)
