@@ -1,3 +1,6 @@
 {
-  "eventos": []
+  "eventos": [
+    { "nombre": "Feria de Emprendimiento ESAN", "fecha": "28 nov, 10:00", "coordenadas": [-76.9611597, -12.1057695] },
+    { "nombre": "Charla: IA en los negocios", "fecha": "28 nov, 16:00", "coordenadas": [-76.9609505, -12.1054518] }
+  ]
 }

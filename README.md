@@ -5,6 +5,8 @@ La app lleva hasta el evento de ESAN: muestra sobre la cámara el camino hacia e
 pileta) para mostrar a Chuwi e incluye el mapa 3D del campus hecho en Unity, con la ruta, el evento y tu ubicación.
 No depende del mapa web.
 
+De qué trata el proyecto, cómo se usa y en qué estado está: [`docs/PROYECTO.md`](docs/PROYECTO.md).
+
 ## Requisitos
 
 - Unity `6000.6.0f1` con el módulo de Android.
